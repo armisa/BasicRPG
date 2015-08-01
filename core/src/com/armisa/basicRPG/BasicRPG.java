@@ -1,16 +1,26 @@
 package com.armisa.basicRPG;
 
+import java.util.ArrayList;
+
+import buttons.ExitGameButton;
+
+import com.armisa.utils.AbstractButton;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class BasicRPG extends ApplicationAdapter {
+public class BasicRPG extends ApplicationAdapter implements InputProcessor{
 	SpriteBatch batch;
+	ArrayList<AbstractButton> buttons = new ArrayList<AbstractButton>();
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		buttons.add(new ExitGameButton("exitButton.png", 100f, 100f));
+		Gdx.input.setInputProcessor(this);
+
 	}
 
 	@Override
@@ -18,6 +28,63 @@ public class BasicRPG extends ApplicationAdapter {
 		Gdx.gl.glClearColor(.15f, .8f, .3f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
+		for(AbstractButton button: buttons){
+			button.draw(batch);
+		}
 		batch.end();
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/**
+	 * if the user touches somewhere on screen, check if a button was pressed, and call its
+	 * click handler if so
+	 */
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		for(AbstractButton b : buttons){
+			b.checkPressed(screenX, screenY, new Object[]{this});
+		}
+		return true;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
