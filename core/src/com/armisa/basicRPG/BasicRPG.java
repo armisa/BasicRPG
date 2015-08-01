@@ -1,7 +1,10 @@
 package com.armisa.basicRPG;
 
+import java.util.ArrayList;
+
 import buttons.ExitGameButton;
 
+import com.armisa.utils.AbstractButton;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -10,12 +13,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class BasicRPG extends ApplicationAdapter implements InputProcessor{
 	SpriteBatch batch;
-	ExitGameButton exitButton;
+	ArrayList<AbstractButton> buttons = new ArrayList<AbstractButton>();
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		exitButton = new ExitGameButton("exitButton.png", 100f, 100f);
+		buttons.add(new ExitGameButton("exitButton.png", 100f, 100f));
 		Gdx.input.setInputProcessor(this);
 
 	}
@@ -25,7 +28,9 @@ public class BasicRPG extends ApplicationAdapter implements InputProcessor{
 		Gdx.gl.glClearColor(.15f, .8f, .3f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		exitButton.draw(batch);
+		for(AbstractButton button: buttons){
+			button.draw(batch);
+		}
 		batch.end();
 	}
 
@@ -53,7 +58,9 @@ public class BasicRPG extends ApplicationAdapter implements InputProcessor{
 	 */
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		exitButton.checkPressed(screenX, screenY, new Object[]{this});
+		for(AbstractButton b : buttons){
+			b.checkPressed(screenX, screenY, new Object[]{this});
+		}
 		return true;
 	}
 
