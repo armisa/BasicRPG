@@ -1,90 +1,32 @@
 package com.armisa.basicRPG;
 
-import java.util.ArrayList;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Screen;
 
-import buttons.ExitGameButton;
-
-import com.armisa.utils.AbstractButton;
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-public class BasicRPG extends ApplicationAdapter implements InputProcessor{
-	SpriteBatch batch;
-	ArrayList<AbstractButton> buttons = new ArrayList<AbstractButton>();
+public class BasicRPG extends Game{
+	private Screen startScreen;
+	enum screens{
+		START
+	};
 	
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		buttons.add(new ExitGameButton("exitButton.png", 100f, 100f));
-		Gdx.input.setInputProcessor(this);
-
-	}
-
-	@Override
-	public void render () {
-		Gdx.gl.glClearColor(.15f, .8f, .3f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		for(AbstractButton button: buttons){
-			button.draw(batch);
-		}
-		batch.end();
-	}
-
-	@Override
-	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	/**
-	 * if the user touches somewhere on screen, check if a button was pressed, and call its
-	 * click handler if so
+	 * After initial setup, change immediately to the StartScreen
 	 */
 	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		for(AbstractButton b : buttons){
-			b.checkPressed(screenX, screenY, new Object[]{this});
+	public void create () {
+		startScreen = new StartScreen(this);
+		setScreen(startScreen);
+
+	}
+
+	public void changeScreen(screens screen){
+		switch(screen){
+		case START:
+			setScreen(startScreen);
+			break;
+		default:
+			break;
+		
 		}
-		return true;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }
