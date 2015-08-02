@@ -3,6 +3,7 @@ package com.armisa.basicRPG;
 import java.util.ArrayList;
 
 import buttons.ExitGameButton;
+import buttons.PlayGameButton;
 
 import com.armisa.utils.AbstractButton;
 import com.badlogic.gdx.Gdx;
@@ -32,6 +33,7 @@ public class StartScreen implements Screen, InputProcessor{
 		this.game = game;
 		batch = new SpriteBatch();
 		buttons.add(new ExitGameButton("exitButton.png", 100f, 100f));
+		buttons.add(new PlayGameButton("playButton.png", 100f, 1000f));
 		background = new Texture("background.png");
 	}
 	
@@ -62,7 +64,7 @@ public class StartScreen implements Screen, InputProcessor{
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		for(AbstractButton b : buttons){
-			b.checkPressed(screenX, screenY, new Object[]{this});
+			b.checkPressed(screenX, screenY, new Object[]{game});
 		}
 		return true;
 	}

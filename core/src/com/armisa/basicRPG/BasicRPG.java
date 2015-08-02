@@ -5,8 +5,10 @@ import com.badlogic.gdx.Screen;
 
 public class BasicRPG extends Game{
 	private Screen startScreen;
-	enum screens{
-		START
+	private Screen hubScreen;
+	public enum screens{
+		START,
+		HUB
 	};
 	
 	/**
@@ -15,6 +17,7 @@ public class BasicRPG extends Game{
 	@Override
 	public void create () {
 		startScreen = new StartScreen(this);
+		hubScreen = new HubScreen(this);
 		setScreen(startScreen);
 
 	}
@@ -23,6 +26,9 @@ public class BasicRPG extends Game{
 		switch(screen){
 		case START:
 			setScreen(startScreen);
+			break;
+		case HUB:
+			setScreen(hubScreen);
 			break;
 		default:
 			break;
